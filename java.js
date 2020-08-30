@@ -1,45 +1,106 @@
 
+// var textareas = $(".form-control")
+// text.addEventListener("submit", e => {
+//   e.preventDefault();
+// });
 
-$("#searchbtn").on("click", function(event){
-    event.preventDefault();
-console.log("searchbtn")
-})
-var APIKey = "166a433c57516f51dfab1f7edaed8413";
+
+
+// let city = [];
+
+var APIKey = "526a2060086048bc6956fbed29dbfe3d";
 
 //  building the URL we need to query the database
-var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
-  "q=Philadelphia,Philadelphia&appid=" + APIKey;
+
+let onecall = ""
+let currentlat;
+let currentlong;
+
+
 
 //AJAX call to the  API
-$.ajax({
-  url: queryURL,
-  method: "GET"
+function start(city) {
+
+  // let zipCode = ;
+
+  // let queryURL = "https://api.openweathermap.org/data/2.5/weather?=" + zipCode + "&appid=" + APIKey;
+  // var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+  // "q=Bujumbura,Burundi&appid=" + APIKey;
+
+  console.log(city)
+
+  $.ajax(
+    "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey
+  )
+    // We store all of the retrieved data inside of an object called "response"
+    .then(function (response) {
+
+
+      // Log the resulting object
+      console.log(response);
+
+      // // Transfer content to HTML
+
+      // console.log(currentlong);
+      $("#ws").text("Wind Speed: " + response.wind.speed);
+      console.log(response.wind.speed)
+      $("#hum").text("Humidity: " + response.main.humidity);
+
+      // // Convert the temp to fahrenheit
+      var fahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
+
+      // // add temp content to html
+      $("#temp").text("Temperature (F) " + fahrenheit.toFixed(2));
+      $("#city1").text(response.name);
+      console.log()
+
+      let currentlat = response.coord.lat;
+      let currentlong = response.coord.lon;
+      console.log(currentlat)
+      console.log(currentlong)
+
+
+      $.ajax(
+        "http://api.openweathermap.org/data/2.5/uvi?&lat=" + currentlat + "&appid=" + APIKey +"&lon=" + currentlong
+      )
+        .then(function (response) {
+          console.log(response)
+          $("#uv").text("Wind Speed: " + response.value);
+        })
+
+    });
+
+
+}
+
+
+// // Log the data in the console as well
+// console.log("Wind Speed: " + response.wind.speed);
+// console.log("Humidity: " + response.main.humidity);
+// console.log("Temperature (F): " + fahrenheit);  
+
+
+
+
+
+
+
+$("#add-city").on("click", function (event) {
+  event.preventDefault();
+  // start('lima')
+  // start("burlington")
+  // start('radnor')
+  // // cityName = $("")
+  // console.log("#add-city")
+
+
+  let city3 = $("#search").val()
+  start(city3)
 })
-  // We store all of the retrieved data inside of an object called "response"
-  .then(function(response) {
 
-    // Log the queryURL
-    console.log(queryURL);
 
-    // Log the resulting object
-    console.log(response);
 
-    // Transfer content to HTML
-    $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-    $("#ws").text("Wind Speed: " + response.wind.speed);
-    $("#hum").text("Humidity: " + response.main.humidity);
-    
-    // Convert the temp to fahrenheit
-    var fahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
-
-    // add temp content to html
-    $("#temp").text("Temperature (F) " + fahrenheit.toFixed(2));
-
-    // Log the data in the console as well
-    console.log("Wind Speed: " + response.wind.speed);
-    console.log("Humidity: " + response.main.humidity);
-    console.log("Temperature (F): " + fahrenheit);
-  });
+// appid={appid}&lat={lat}&lon={lon}
 
 
 
@@ -50,4 +111,100 @@ $.ajax({
 
 
 
-  
+
+      // function wawa(thiswillsave, funbox, keyName) {
+//   $(thiswillsave).on("click", function () {
+//       // get text from wawa 
+//       var textarea = $(funbox).val();
+//       // text area is saved in local storage
+//       localStorage.setItem(keyName, textarea)
+//   })
+//   // lets turn this data into a btn
+//   var save = localStorage.getItem(keyName)
+//   $(funbox).val(save);
+
+// var storedValue = localStorage.getItem(keyName);
+//   if(storedValue){
+
+//   document.getElementById("yourcity").value;
+
+//   }
+//   var storedButton = localStorage.getItem("button");
+//   if(storedButton){
+
+//   // document.getElementsByClass("blauw").value = storedButton;
+
+//   }
+// }// wawa is pulling text/saveBtn activates/user-... is targeted for data... insertion
+// wawa("#add-city", ".form-control", "data1")
+// wawa("#add-city", ".form-control", "data2")
+// wawa("#add-city", ".form-control", "data3")
+// wawa("#add-city", ".form-control", "data4")
+// wawa("#add-city", ".form-control", "data5")
+// wawa("#add-city", ".form-control", "data6")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// let citys = ["Salt lake city"];
+
+// function renderButtons() {
+
+//   // Deleting the movie buttons prior to adding new movie buttons
+//   // (this is necessary otherwise we will have repeat buttons)
+//   $("#yourcity").empty();
+
+//   // Looping through the array of movies
+//   for (var i = 0; i < citys.length; i++) {
+
+//     // Then dynamicaly generating buttons for each movie in the array.
+//     // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
+//     var a = $("<button>");
+//     // Adding a class
+//     a.addClass("city");
+//     // Adding a data-attribute with a value of the movie at index i
+//     a.attr("data-name", citys[i]);
+//     // Providing the button's text with a value of the movie at index i
+//     a.text(citys[i]);
+//     // Adding the button to the HTML
+//     $("#yourcity").append(a);
+//   }
+// }
+
+// // This function handles events where one button is clicked
+// $("#add-city").on("click", function(event) {
+//   // event.preventDefault() prevents the form from trying to submit itself.
+//   // We're using a form so that the user can hit enter instead of clicking the button if they want
+//   event.preventDefault();
+
+//   // This line will grab the text from the input box
+//   let newcity = $("#search").val().trim();
+//   // The movie from the textbox is then added to our array
+//   citys.push(newcity);
+
+//   // calling renderButtons which handles the processing of our movie array
+//   renderButtons();
+// });
+
+// // Calling the renderButtons function at least once to display the initial list of movies
+// renderButtons();
+
+
+
+
+
+
+
+
