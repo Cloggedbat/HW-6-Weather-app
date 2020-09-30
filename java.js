@@ -30,36 +30,56 @@ function start(city) {
   console.log(city)
 
   $.ajax(
-    "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}`
+    // "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey
   )
     // We store all of the retrieved data inside of an object called "response"
     .then(function (response) {
 
 
-      // Log the resulting object
+      // // Log the resulting object
       console.log(response);
 
-      // // Transfer content to HTML
+      // // // Transfer content to HTML
 
-      // console.log(currentlong);
-      $("#ws").text("Wind Speed: " + response.wind.speed);
-      console.log(response.wind.speed)
-      $("#hum").text("Humidity: " + response.main.humidity);
+      // // console.log(currentlong);
+      // $("#ws").text("Wind Speed: " + response.list[0].wind.speed);
+      // console.log(response.wind.speed)
+      // $("#hum").text("Humidity: " + response.main.humidity);
 
-      // // Convert the temp to fahrenheit
-      var fahrenheit = (response.main.temp - 273.15) * 1.80 + 32;
+      // // // Convert the temp to fahrenheit
+      
+      
+      var fahrenheit = toFahrenheit(response.list[0].main.feels_like) ;
 
-      // // add temp content to html
-      $("#temp").text("Temperature (F) " + fahrenheit.toFixed(2));
-      $("#city1").text(response.name);
-      console.log()
+      // // // add temp content to html
+      // $("#temp").text("Temperature (F) " + fahrenheit.toFixed(2));
+      // $("#city1").text(response.name);
+      // console.log()
 
-      let currentlat = response.coord.lat;
-      let currentlong = response.coord.lon;
-      console.log(currentlat)
-      console.log(currentlong)
-
-
+      // let currentlat = response.coord.lat;
+      // let currentlong = response.coord.lon;
+      // console.log(currentlat)
+      // console.log(currentlong)
+     
+      function fiveday(dayweather, listhour){
+      let weather = response.list[listhour]
+      
+        // $(".dayweather" + dayweather).text("5 day forcast: " + toFahrenheit(weather.main.feels_like))
+        // $(".dayweather" + dayweather).text("5 day forcast: " (weather.main.wind.))
+        $(".dayweather" + dayweather).html(`
+        <p>${toFahrenheit(weather.main.feels_like)}</p>
+        <p>${weather.main.wind}</p>
+        `)
+      
+        
+      }
+     fiveday(1, 4)
+     fiveday(2, 12)
+     fiveday(3, 20)
+     fiveday(4, 28)
+     fiveday(5, 36)
+     
       $.ajax(
         "http://api.openweathermap.org/data/2.5/uvi?&lat=" + currentlat + "&appid=" + APIKey +"&lon=" + currentlong
       )
@@ -93,13 +113,17 @@ $("#add-city").on("click", function (event) {
   // // cityName = $("")
   // console.log("#add-city")
 
-
   let city3 = $("#search").val()
   start(city3)
 })
 
 
 
+function toFahrenheit(kelvin){
+
+  return ((kelvin - 273.15) * 1.80 + 32).toFixed(0)
+   
+}
 // appid={appid}&lat={lat}&lon={lon}
 
 
