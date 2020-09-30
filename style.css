@@ -4,7 +4,7 @@
 }
 .container1{
     width: 180px;
-    background-color:blueviolet;
+    background-color:lightblue;
     padding: 50px;
     margin: 20px;
     float: bottom;
@@ -17,5 +17,8 @@
     width: fixed;
     
 
+}
+.topBox {
+   font-size: 25px; 
 }
 
