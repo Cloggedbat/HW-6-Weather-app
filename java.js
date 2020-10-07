@@ -46,7 +46,7 @@ function start(city) {
       
       
       
-      var fahrenheit = toFahrenheit(response.list[0].main.feels_like) ;
+      var fahrenheit = toFahrenheit(response.list[5].main.feels_like) ;
       
       // console.log()
       
@@ -62,7 +62,7 @@ function start(city) {
         
         $(".dayweather" + dayweather).html(`
         
-        <p class"text-center"> ${weatherbox.weather[0].description}</p>
+        <p class"text-center">Looks Like: ${weatherbox.weather[0].description}</p>
         
         <p>Temperature: ${toFahrenheit(weatherbox.main.feels_like)} Degrees Fahrenheit</p>
         
@@ -72,7 +72,7 @@ function start(city) {
         
         $("#ws").text("Wind Speed: " + weatherbox.wind.speed);        
         $("#hum").text("Humidity: " + weatherbox.main.humidity);
-        $("#city1").text(response.city.name);
+        $("#city1").text(response.city.name + ", " + response.city.country);
         $("#temp").text("Temperature: " + toFahrenheit(weatherbox.main.feels_like))
         
       }
