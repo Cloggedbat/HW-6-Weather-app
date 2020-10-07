@@ -22,3 +22,12 @@
    font-size: 25px; 
 }
 
+body {
+    background-size: 10px;
+    background: url(./IMG/IMG_8424.JPG)
+
+}
+
+/* .card {
+    background: none
+} */
